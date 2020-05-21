@@ -26,6 +26,17 @@ exports.addTransaction = async (req, res, next) => {
   }
 }
 
+exports.editTransaction = async (req, res, next) => {
+  try {
+    const { id, text, amount } = req.body;
+    const transaction = await Transaction.findByIdAndUpdate(id, {text, amount}, {new: true});
+
+    return res.status(200).json({ success: true, data: transaction});
+  } catch (error) {
+    return res.status(500).json({ success: false, error: 'Server error'});
+  }
+}
+
 exports.deleteTransaction = async (req, res, next) => {
   try {
     const transaction = await Transaction.findById(req.params.id);
