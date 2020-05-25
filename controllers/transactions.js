@@ -28,8 +28,9 @@ exports.addTransaction = async (req, res, next) => {
 
 exports.editTransaction = async (req, res, next) => {
   try {
+    const updatedAt = new Date();
     const { id, text, amount } = req.body;
-    const transaction = await Transaction.findByIdAndUpdate(id, {text, amount}, {new: true});
+    const transaction = await Transaction.findByIdAndUpdate(id, {text, amount, updatedAt}, {new: true});
 
     return res.status(200).json({ success: true, data: transaction});
   } catch (error) {
